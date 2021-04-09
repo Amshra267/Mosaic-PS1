@@ -186,13 +186,12 @@ def contour_detection(w, h, binary_img = None):
         """Slightly unique"""
         """------if a contour is not detected then insteading of getting error or fail one possible try can be done using
         recursive call on darkeing the black intensity, so that may be the contour will be detected.---------------"""
-
-        if partition is None: # if contour is not detected once then we increase the black intensity in order to get good intensity for contour
-            num_cycles+=1   #increasing counts if not detected
-            if num_cycles>=5:
-                print("Contour_not_detected, even while applying extreme morphology, chhose different image")
-                sys.exit(0) # stop execution
-            partition = contour_detection(w, h, cv2.erode(binary_img.copy(), np.ones((2,2), np.uint8),iterations = 2))
+        # if contour is not detected once then we increase the black intensity in order to get good intensity for contour
+        num_cycles+=1   #increasing counts if not detected
+        if num_cycles>=5:
+            print("Contour_not_detected, even while applying extreme morphology, chhose different image")
+            sys.exit(0) # stop execution
+        partition = contour_detection(w, h, cv2.erode(binary_img.copy(), np.ones((2,2), np.uint8),iterations = 2))
     return partition
 
 
