@@ -9,11 +9,11 @@ def skew_correction(img, before = False):
     this function corrects the input image skewness wrt horizontal and aligns it well
     img - for binary_image
     """
-   # cv2.imshow("masked", )
+  #  cv2.imshow("masked",img )
     t_ero = cv2.dilate(np.uint8(np.logical_not(img.copy()))*255, kernel = np.ones((2,2), np.uint8), iterations = 1)
     contours, _ = cv2.findContours(t_ero, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours = sorted(contours, key = cv2.contourArea, reverse = True)
-    print(len(contours))
+   # print(len(contours))
     # Find largest contour and surround in min area box
     largestContour = contours[0]
     rect = cv2.minAreaRect(largestContour)
@@ -22,12 +22,12 @@ def skew_correction(img, before = False):
     box = cv2.boxPoints(rect)
     box = np.int0(box)
     cv2.drawContours(t_ero, [box], 0, (255,255,255), 3)
-    cv2.imshow("t_Ero", t_ero)
+  #  cv2.imshow("t_Ero", t_ero)
     # the `cv2.minAreaRect` function returns values in the
     # range [-90, 0); as the rectangle rotates clockwise the
     # returned angle trends to 0 -- in this special case we
     # need to add 90 degrees to the angle
-    print(angle)
+   # print(angle)
     if angle < -45:
         angle = -(90 + angle)
     # otherwise, just take the inverse of the angle to make
@@ -36,7 +36,7 @@ def skew_correction(img, before = False):
         angle = -angle
     # rotate the image to deskew it
     #print(angle)
-    print("angle- ", angle)
+    #print("angle- ", angle)
     if (angle < 10 and angle>-10) and before==True:
         return img
 
@@ -90,6 +90,7 @@ def thresh_after_resize(img):
     #---------------------------Finished cleaning----------#
     
     ## Firstly to segment the entire word from input image using contours
+    cv2.imshow("dila2", dilation)
     dilation = skew_correction(dilation, before = True)
     extract = contour_detection(w, h, dilation)
     extract = skew_correction(extract)
@@ -126,6 +127,7 @@ def thresh_before_resize(img):
     ## Firstly to segment the entire word from input image using contours
     dilation = skew_correction(dilation, before = True)
     extract = contour_detection(w, h, dilation)
+   # cv2.imshow("ext", extract*255)
     #----------------------------
     inp_shape = dilation.shape
     """ ----------INNOVATION - we made the function (skew_correction) which made the input rotation invariant wrt to horizotal-------"""
@@ -142,6 +144,7 @@ def contour_detection(w, h, binary_img = None):
     global num_cycles
     try:
         contours, _ = cv2.findContours(cv2.erode(binary_img, np.ones((4,1),np.uint8), iterations = 1),cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+     #   print(len(contours))
         """-------INNOVATION - making robust to shirorekha breaks(upper line breaks) even sometimes for very large breaks------------"""
         parts = np.asarray([cv2.boundingRect(c) for c in contours])
      #   print(parts)
@@ -165,7 +168,7 @@ def contour_detection(w, h, binary_img = None):
             w_all = overall_cnt[:, 0].max()+overall_cnt[np.argmax(overall_cnt[:, 0]),2]-x_min    # calculating the cumulative width of all from overall cnt
         else:
             x_min, y_min, w_all, h_max  = filters[0]
-        # print(x_min, y_min, h_max, w_all)
+     #   print(x_min, y_min, h_max, w_all)
         # print(overall_cnt.shape)
         # print(w_h_ratio)
         # print(parts)
@@ -177,16 +180,33 @@ def contour_detection(w, h, binary_img = None):
         imgs = binary_img.copy()
         
       #  print("h - ", imgs.shape)
-        h_d, w_d = imgs.shape
+        
         #      continue
         diff = y_min-0
         if diff>h//20:
             diff = h//20
         
-        partition = binary_img.copy()[y_min-diff:y_min+h_max+h//100, x_min-w//40:x_min+w_all+w//20]//255
-        #print(extract)
         
-        cv2.rectangle(imgs, (x_min-w//40, y_min-diff), (x_min+w_all+w//20, y_min+h_max+h//100), (0,0,0), 2)
+        # now selecting final coordinates to crop
+        x_f1 = x_min-w//40
+        y_f1 = y_min-diff
+        x_f2 = x_min+w_all+w//20
+        y_f2 = y_min+h_max+h//100
+        
+        
+        if x_f1<0:
+            x_f1 = 0
+        if x_f2>w:
+            x_f2 = w
+        if y_f1<0:
+            y_f1 = 0
+        if y_f2>h:
+            y_f2 = h
+        #print(extract)
+       # print((x_f1, y_f1), (x_f2, y_f2))
+        partition = binary_img.copy()[y_f1:y_f2, x_f1:x_f2]//255
+      #  print(partition.shape)
+        cv2.rectangle(imgs, (x_f1, y_f1), (x_f2, y_f2), (0,0,0), 2)
         cv2.imshow("imgs", imgs)
         num_cycles = 0
     except:
@@ -213,7 +233,7 @@ def extraction(img):
     """
     extract1, shape1 = thresh_before_resize(img)
     extract2, shape2 = thresh_after_resize(img)
-   # print(extract1.shape, shape1, extract2.shape, shape2)
+    print(extract1.shape, shape1, extract2.shape, shape2)
 
     if extract1.shape[1]/shape1[1]<extract2.shape[1]/shape2[1]:
         extract = extract2
@@ -221,7 +241,7 @@ def extraction(img):
     else:
         extract = extract1
         print("extract1")
-    cv2.imshow("ext1", extract*255)
+    cv2.imshow("ext1", extract1*255)
     cv2.imshow("ext2", extract2*255)
     cv2.imshow("ext", extract*255)
     
@@ -269,7 +289,7 @@ def extraction(img):
     seprators.append(len(row_pix_count)-count+margin)
 
     #-------------------------DONE FORMATION-------------
-    print(seprators)
+ #   print(seprators)
     
 
     ##-----Now the above list will consider the matra of bada aa, danda of ga seprately which need to be taken into consideration 
@@ -284,8 +304,8 @@ def extraction(img):
         for j in range(i+1, len(seprators)):
             part_col_pixs = v_projection(cv2.Canny(lower[:,seprators[part_new]:seprators[j]]*255, 60,160))
             #print(np.sum(part_col_pixs!=0)/len(part_col_pixs ))
-            print(len(part_col_pixs)/lower.shape[0])
-            if np.sum(part_col_pixs!=0)/len(part_col_pixs )<=0.45 or len(part_col_pixs)/lower.shape[0]<=0.45:# if the black pizels count in columns is below a certain limit then it will be added into previous
+     #       print(len(part_col_pixs)/lower.shape[0])
+            if np.sum(part_col_pixs!=0)/len(part_col_pixs )<=0.3 or len(part_col_pixs)/lower.shape[0]<=0.35:# if the black pizels count in columns is below a certain limit then it will be added into previous
                 part_new += 1
             else:
                 if part_new!=part_prev:
@@ -296,7 +316,7 @@ def extraction(img):
         i=part_new
     if seprators[-1] not in modified_seprate: # if last is not present then append it else no
         modified_seprate.append(seprators[-1])
-    print(modified_seprate)
+  #  print(modified_seprate)
     #--------------DONE---------------
    
    #-------------------GENERATOR to yield images one by one to make memory efficient running-------------------###
@@ -331,7 +351,7 @@ def extraction(img):
 
 if __name__ == "__main__":
 
-    img = cv2.imread("sample_words/31.jpeg")
+    img = cv2.imread("sample_words/34.jpeg")
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     ## resizing image with proper aspect ratio
     
@@ -348,7 +368,7 @@ if __name__ == "__main__":
         except Exception as e:
             break
 
-   # cv2.imshow("word", img)
+    cv2.imshow("word", img)
     
 
     if cv2.waitKey(0)&0Xff ==27:
