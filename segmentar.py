@@ -233,14 +233,14 @@ def extraction(img):
     """
     extract1, shape1 = thresh_before_resize(img)
     extract2, shape2 = thresh_after_resize(img)
-    print(extract1.shape, shape1, extract2.shape, shape2)
+#     print(extract1.shape, shape1, extract2.shape, shape2)
 
     if extract1.shape[1]/shape1[1]<extract2.shape[1]/shape2[1]:
         extract = extract2
-        print("extract2")
+#         print("extract2")
     else:
         extract = extract1
-        print("extract1")
+#         print("extract1")
     cv2.imshow("ext1", extract1*255)
     cv2.imshow("ext2", extract2*255)
     cv2.imshow("ext", extract*255)
@@ -305,7 +305,7 @@ def extraction(img):
             part_col_pixs = v_projection(cv2.Canny(lower[:,seprators[part_new]:seprators[j]]*255, 60,160))
             #print(np.sum(part_col_pixs!=0)/len(part_col_pixs ))
      #       print(len(part_col_pixs)/lower.shape[0])
-            if np.sum(part_col_pixs!=0)/len(part_col_pixs )<=0.3 or len(part_col_pixs)/lower.shape[0]<=0.35:# if the black pizels count in columns is below a certain limit then it will be added into previous
+            if np.sum(part_col_pixs!=0)/len(part_col_pixs )<=0.45 or len(part_col_pixs)/lower.shape[0]<=0.35:# if the black pizels count in columns is below a certain limit then it will be added into previous
                 part_new += 1
             else:
                 if part_new!=part_prev:
@@ -336,10 +336,16 @@ def extraction(img):
         if w_prev>=h_prev:
             ext  = (w_prev-h_prev)//2
 
+#         part = cv2.copyMakeBorder(part, 10+ext, 10+ext, 10, 10, cv2.BORDER_CONSTANT, value = 255)
+#         type1 = cv2.erode(cv2.resize(part, (64,64), cv2.INTER_NEAREST), np.ones((2,2), np.uint8), iterations = 1)
+#         type2 = cv2.erode(cv2.resize(part, (64,64), cv2.INTER_NEAREST), np.ones((1,1), np.uint8), iterations = 1)
+#         type3 = cv2.resize(part, (64,64), cv2.INTER_NEAREST)
+#         yield type1, type2, type3
+        
         part = cv2.copyMakeBorder(part, 10+ext, 10+ext, 10, 10, cv2.BORDER_CONSTANT, value = 255)
-        type1 = cv2.erode(cv2.resize(part, (64,64), cv2.INTER_NEAREST), np.ones((2,2), np.uint8), iterations = 1)
-        type2 = cv2.erode(cv2.resize(part, (64,64), cv2.INTER_NEAREST), np.ones((1,1), np.uint8), iterations = 1)
-        type3 = cv2.resize(part, (64,64), cv2.INTER_NEAREST)
+        type1 = cv2.erode(cv2.resize(part, (64,64), cv2.INTER_NEAREST), np.ones((3, 3), np.uint8), iterations = 1)
+        type2 = cv2.erode(cv2.resize(part, (64,64), cv2.INTER_NEAREST), np.ones((3, 3), np.uint8), iterations = 1)
+        type3 = cv2.resize(cv2.erode(part, np.ones((5, 5), np.uint8), iterations = 1), (64,64), cv2.INTER_NEAREST)
         yield type1, type2, type3
 
 

@@ -16,7 +16,7 @@ mapping=classes = {
 }
 
 ##-------loading model with weights---
-model = load_model("models/98.2-96.5.h5")
+model = load_model("models/96.5-96.5.h5")
 
 
 if __name__=="__main__":
