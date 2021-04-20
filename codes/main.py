@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from segmentar import extraction
+from Segmentar import extraction
 from tensorflow.keras.models import load_model
 
 mapping= {
@@ -28,12 +28,12 @@ model = load_model("model.h5")
 
 
 if __name__=="__main__":
-    print("Enter the path of input image")
+    print("Enter the path of Input Image")
 
     while True:
         path = input()
         if not os.path.exists(path):
-            print("File not exist, please enter correct path once more")
+            print("File does not exist, please enter Correct Path")
             continue
         break
 
