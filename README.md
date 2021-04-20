@@ -34,7 +34,8 @@ You can train model on your own Dataset or you can use the pretrained model avai
 ## Testing
 For testing, Run
 ```bash
-python3 codes/main.py
+cd codes
+python3 main.py
 ```
 before running just modify
 ```python

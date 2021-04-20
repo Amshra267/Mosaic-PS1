@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from codes.segmentar import extraction
+from segmentar import extraction
 from tensorflow.keras.models import load_model
 
 mapping= {
