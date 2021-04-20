@@ -40,7 +40,7 @@ before running just modify
 ```python
 load_model("model.h5")
 ```
-according to your needs in [main.py](codes/MAIN.py) and after that while running it will ask for the path of word image.
+according to your needs in [main.py](codes/main.py) and after that while running it will ask for the path of word image.
 
 ## Overview of Our Approach
 ### Segmentation
@@ -55,7 +55,7 @@ according to your needs in [main.py](codes/MAIN.py) and after that while running
  - Used **exponential lr_decay** while training to achieve smooth convergence
 
  
-For finding Details about segmentation and model Look into [Segmenter.py](codes/Segmentar.py) and [train.ipynb](codes/train.ipynb)
+For finding Details about segmentation and model Look into [Segmenter.py](codes/segmentar.py) and [train.ipynb](codes/train.ipynb)
 
 <h2 align  = "center"> <b>Our Contribution </b></h2>
 
