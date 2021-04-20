@@ -1,0 +1,25 @@
+# Team Creatorz
+
+## Model Info
+
+1. We have trained our model on 30 characters which can be found in our character set.
+2. We trained our model on our custom dataset. The dataset have been made using letters of different width, rotations, noise etc.
+3. The model can predict characters with different width. Letters written by pens, sketch pens can be easily detected. (Do not use markers).
+
+## Image Segmentation Info
+
+1. Our segmentar can deal with a rotation range of -45 to 45 degrees majorly. In some cases it can also deal with a rotation range of -60 to 60 degrees.
+2. Our segmentar can also remove shadow upto certain limit.
+3. Our segmentar can detect small line breaks between a word.
+
+## Testing
+
+1. Install the dependencies using the requirement.txt file.
+2. Run the main.py file in suitable environment
+3. When it will ask for an image path give it a correct image path (If the image path is not correct it will again ask for an image path again)
+4. The output will show the segmented characters and it will print the predicted letters.
+5. To stop the run press escape button. 
+
+## Character Set
+
+"क", "ग", "घ", "च", "छ", "ज", "झ", "ञ", "ट", "ठ", "ड", "ण", "त", "थ", "द", "न", "फ", "म", "र", "ल", "व", "श", "त्र", "ज्ञ", "अ", "उ", "ऊ", "ए", "ऐ", "ओ"
