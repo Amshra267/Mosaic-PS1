@@ -5,7 +5,7 @@
     <img height="250" width="1000" src="hindi.png">
 </p>
 
-This Repo contains our approach and code for the <b>Problem Statemnet for Round-1 of Event MOSAIC organised at UDYAM'21</b>. For more info about the PS, find - [Here](Mosaic'21_PS1.pdf)
+This Repo contains our approach and code for the <b>Problem Statement for Round-1 of Event MOSAIC organised at UDYAM'21</b>. For more info about the PS, find - [Here](Mosaic'21_PS1.pdf)
 
 ## Installation
 
@@ -22,7 +22,7 @@ git clone https://github.com/akshatsood2249/Mosaic-PS1.git
 ```
 - Then Run below commands for installing the requirements.
 ```bash
-cd MOSAIC-PS1
+cd Mosaic-PS1
 pip install -r requirements.txt
 ```
 
