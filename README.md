@@ -9,12 +9,7 @@ This Repo contains our approach and code for the <b>Problem Statement for Round-
 
 ## Installation
 
-We strongly recommend to create a seprate virtual environment for installing the dependencies using 
-```
-python3 -m venv <env_name>
-source <env_name>/bin/activate
-```
-Make sure you have **python version>=3.6**
+We strongly recommend to create a seprate virtual environment for installing the dependencies .Make sure you have **python version>=3.6**
 
 - Clone Repo
 ```bash
@@ -79,7 +74,7 @@ We trained several models using different techniques and able to get the train/v
 
 Run 
 ```bash
-wget 
+wget https://github.com/akshatsood2249/Mosaic-PS1/files/6348871/Hindi_Char-Dataset.zip
 unzip Hindi_Char-Dataset.zip
 ```
 For more info about this Dataset attributes or our Approach, Read this [Medium Article]()
