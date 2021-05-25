@@ -79,7 +79,6 @@ Run
 wget https://github.com/akshatsood2249/Mosaic-PS1/files/6348871/Hindi_Char-Dataset.zip
 unzip Hindi_Char-Dataset.zip
 ```
-For more info about this Dataset attributes or our Approach, Read this [Medium Article]()
 
 <h2><b>Citation</b></h2>
 
