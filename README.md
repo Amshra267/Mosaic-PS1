@@ -7,6 +7,8 @@
 
 This Repo contains our approach and code for the <b>Problem Statement for Round-1 of Event MOSAIC organised at UDYAM'21</b>. For more info about the PS, find - [Here](Mosaic'21_PS1.pdf)
 
+Kindly read our [Article](https://akshatsood2249.medium.com/udyam-mosaic-round-1-5a9d7fd23ddb) on Medium which throws light on how we handled the dataset, approach we followed while processing the images and how we trained our model
+
 ## Installation
 
 We strongly recommend to create a seprate virtual environment for installing the dependencies .Make sure you have **python version>=3.6**
